@@ -6,7 +6,7 @@ app.use(express.static('./public'));
 
 
 consign({cwd:'app'})
-   .include('controller')
+   .include('controllers')
    .then('routes')	
    .into(app)
 
