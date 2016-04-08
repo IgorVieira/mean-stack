@@ -1,17 +1,16 @@
 module.exports = function(app){
 
-	var controller = {}
+	var controller = {
+		lista:(req, res) =>{
+			var grupos = [
+	                {_id:1, nome:'esportes'},
+	                {_id:2, nome:'lugares'},
+	                {_id:3, nome:'animais'}
+	        ]
 
-	controller.lista =  function(req, res){
-		var grupos = [
-                {_id:1, nome:'esportes'},
-                {_id:2, nome:'lugares'},
-                {_id:3, nome:'animais'}
-        ]
-
-		res.json(grupos)
+			res.json(grupos)
+		}
 	}
-
 
 	return controller
 
