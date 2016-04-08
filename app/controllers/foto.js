@@ -8,11 +8,18 @@ var fotos = [
 module.exports = function(app){
    
 
+	var CONTADOR_ID = {}
 
   var controller = {
   	
-  	lista:(req,res) => {
+  	listar:(req,res) => {
          res.json(fotos)  
+    },
+    adicionar:(req, res)=>{
+     var foto =  req.body
+     foto._id = ++CONTADOR_ID
+     fotos.push(foto)
+     res.json(foto)
     },
 
     buscarPorId:(req, res) => {
