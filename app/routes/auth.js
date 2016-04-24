@@ -1,8 +1,8 @@
 module.exports = function(app){
 
 
-    var controller =  app.controller.auth
+    var controller =  app.controllers.auth
 
     app.get('/autenticar', controller.autenticar)
-    app.get('/*', controller.verificaToken)
+    app.use('/*', controller.verificaToken)
 }
