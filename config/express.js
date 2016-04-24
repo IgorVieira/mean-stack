@@ -6,7 +6,7 @@ var app = express();
 
 app.set('secret','merameranomi')
 app.use(express.static('./public'));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 consign({cwd:'app'})
    .include('models')
