@@ -11,6 +11,7 @@ app.route('/v1/fotos')
 app.route('/v1/fotos/:id')
 	.get(controller.buscarPorId)
 	.delete(controller.removePorId)
+	.put(controller.atualizar)
 
 
 

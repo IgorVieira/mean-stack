@@ -1,46 +1,75 @@
-var fotos = [
-       	   {_id:1, titulo:'Leao', url:'http://www.fundosanimais.com/Minis/leoes.jpg'},
-	    	{_id:2, titulo:'Leao2', url:'http://www.fundosanimais.com/Minis/leoes.jpg'}
-        ]
-
-
+var mongoose = require('mongoose')
 
 module.exports = function(app){
-   
 
-	var CONTADOR_ID = {}
+  var model = mongoose.model('Foto')
+
+
 
   var controller = {
-  	
+
   	listar:(req,res) => {
-         res.json(fotos)  
+
+      model.find()
+      .then((fotos)=>{
+        res.json(fotos)
+      })
+      .then((error) =>{
+        console.log('Error for list '+ error)
+        res.sendStatus(500)
+      })
+
+
     },
     adicionar:(req, res)=>{
-     var foto =  req.body
-     foto._id = ++CONTADOR_ID
-     fotos.push(foto)
-     res.json(foto)
+     model.create(req.body)
+     .then((foto)=>{
+       res.json(foto)
+     })
+     .then((error)=>{
+       console.log('Error for add ' + error)
+       res.sendStatus(500)
+     })
+
     },
 
     buscarPorId:(req, res) => {
-   	   var foto = fotos.find((foto) => foto._id == req.params.id)
-   		
-   		res.json(foto)
+   	  model.findById(req.params.id)
+      .then((foto)=>{
+        if(!foto) throw new Error('Foto não encontrada')
+        res.json(foto)
+      })
+      .then((error) =>{
+        console.log('Error for search '+error)
+        res.sendStatus(500)
+      })
     },
 
     removePorId:(req, res)=>{
-    	fotos = fotos.filter((foto) => foto._id != req.params.id)
-    	res.sendStatus(204)
+    	model.remove({'_id':req.params.id})
+      .then(()=>{
+        res.sendStatus(200)
+      })
+      .then((error)=>{
+        console.log('Error for remove '+ error)
+        res.sendStatus(500)
+      })
+    },
+
+    atualizar:(req, res)=>{
+      model.findByIdAndUpdate(req.params.id, req.body)
+      .then((foto)=>{
+        res.json(foto)
+      })
+      .then((error)=>{
+        console.log('Error for update '+error)
+        res.sendStatus(500)
+      })
+
     }
 
 
   }
-
-
-   
-
-
-   
 
 
  return controller

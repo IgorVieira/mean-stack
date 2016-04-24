@@ -4,11 +4,12 @@ var bodyParser = require('body-parser');
 var app = express();
 
 app.use(express.static('./public'));
-
+app.use(bodyParser.json())
 
 consign({cwd:'app'})
-   .include('controllers')
-   .then('routes')	
+   .include('models')
+   .then('controllers')
+   .then('routes')
    .into(app)
 
 
