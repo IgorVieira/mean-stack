@@ -13,20 +13,20 @@ module.exports = function(app){
             model.findOne({login:req.body.login, senha:req.body.senha})
             .then(function(usuario){
                 if(!usuario){
-                    console.log('Login e senha invalidos')
+                   //Login e senha invalidos
                     res.sendStatus(401)
                 }else{
                     var token = jwt.sign(usuario.login, app.get('secret'),{
                         expiresIn:84600
                     })
 
-                    console.log('Send token')
+                    //Send token
                     res.set('x-access-token', token)
                     res.end()
                 }
             })
             .then((error)=>{
-                console.log('Login e senha invalidos ' + error)
+                //Login e senha invalidos 
                 res.sendStatus(401)
             })
         },
@@ -37,7 +37,7 @@ module.exports = function(app){
                 console.log('Vefify token...')
                 jwt.verify(token, app.get('secret'), function(err, decoded){
                     if(err){
-                        console.log('Token reject '+ err)
+                        //Token reject
                         res.sendStatus(401)
                     }
 
@@ -45,7 +45,7 @@ module.exports = function(app){
                     next()
                 })
             }else {
-                console.log('No send token')
+                //'Not send token'
                 res.sendStatus(401)
             }
 
